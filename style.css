@@ -52,3 +52,13 @@ p{margin:0;max-width:600px;font-size:.95rem;text-align:center}
 .lv.lock{opacity:.5}
 .lv:disabled{cursor:not-allowed}
 #theme{position:fixed;top:calc(env(safe-area-inset-top,0px) + 8px);right:8px;z-index:5}
+/* Botão selecionado: texto sempre escuro sobre o fundo branco (legível no modo escuro) */
+#mode button[aria-pressed="true"],#tabs button[aria-pressed="true"]{color:#6b2d4a}
+
+/* Jogo maior e centralizado */
+body{justify-content:center}
+#menu,#game{max-width:840px;margin:0 auto}
+canvas{width:min(100%,780px)}
+@supports (height:100dvh){canvas{width:min(100%,780px,calc((100dvh - 200px) * 1.154))}}
+@media (hover:hover) and (pointer:fine){#ctl{display:none!important}}
+.lv.next{outline:3px dashed #ff4f81;outline-offset:3px}
