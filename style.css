@@ -39,3 +39,16 @@ p{margin:0;max-width:600px;font-size:.95rem;text-align:center}
 #play{font:inherit;font-size:1.5rem;font-weight:600;color:#fff;background:linear-gradient(#ff7aa8,#ff4f81);border:0;border-radius:999px;padding:12px 48px;box-shadow:0 6px 0 rgba(107,45,74,.25)}
 #play:active,.pill:active{transform:translateY(2px)}
 .pill{font:inherit;font-weight:600;color:var(--fg);background:var(--btn);border:0;border-radius:999px;padding:8px 20px;box-shadow:0 4px 0 rgba(107,45,74,.2)}
+
+/* Abas, fases e tema */
+#tab-partida,#tab-fases{display:flex;flex-direction:column;align-items:center;gap:12px;width:100%}
+#tabs button{width:auto;height:auto;padding:8px 24px;font:inherit;font-weight:600;color:var(--fg);border-radius:999px;box-shadow:0 4px 0 rgba(107,45,74,.2)}
+#levels{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;width:min(100%,560px)}
+.lv{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 6px;border-radius:18px;border:3px solid var(--edge);background:var(--btn);color:var(--fg);font:inherit;box-shadow:0 4px 0 rgba(107,45,74,.2)}
+.lv b{font-size:1.7rem}
+.lv span{font-size:.85rem;line-height:1.1;text-align:center}
+.lv small{opacity:.8}
+.lv.done{background:#ff7aa8;border-color:#ff4f81;color:#fff}
+.lv.lock{opacity:.5}
+.lv:disabled{cursor:not-allowed}
+#theme{position:fixed;top:calc(env(safe-area-inset-top,0px) + 8px);right:8px;z-index:5}

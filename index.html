@@ -8,20 +8,29 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<button id="theme" class="pill"></button>
 <section id="menu">
   <h1>Sorvetada</h1>
-  <p class="sub">Monte sua partida e jogue!</p>
-  <div class="row" id="mode"><button data-m="1" aria-pressed="true">1 jogador</button><button data-m="2" aria-pressed="false">2 jogadores (duelo)</button></div>
-  <div class="card" id="c1">
-    <label><img class="pv" id="pv1" alt=""><input id="n1" maxlength="12" placeholder="Nome do Jogador 1" autocomplete="off"></label>
-    <div class="row" id="p1row" aria-label="Escolha o sabor do jogador 1"></div>
+  <p class="sub">Mate os monstros e faça mais pontos!</p>
+  <div class="row" id="tabs"><button data-t="partida" aria-pressed="true">Partida</button><button data-t="fases" aria-pressed="false">Fases</button></div>
+  <div id="tab-partida">
+    <div class="row" id="mode"><button data-m="1" aria-pressed="true">1 jogador</button><button data-m="2" aria-pressed="false">2 jogadores (duelo)</button></div>
+    <div class="card" id="c1">
+      <label><img class="pv" id="pv1" alt=""><input id="n1" maxlength="12" placeholder="Nome do Jogador 1" autocomplete="off"></label>
+      <div class="row" id="p1row" aria-label="Escolha o sabor do jogador 1"></div>
+    </div>
+    <div class="card" id="c2" hidden>
+      <label><img class="pv" id="pv2" alt=""><input id="n2" maxlength="12" placeholder="Nome do Jogador 2" autocomplete="off"></label>
+      <div class="row" id="p2row" aria-label="Escolha o sabor do jogador 2"></div>
+    </div>
+    <button id="play">Jogar!</button>
+    <p id="help"></p>
   </div>
-  <div class="card" id="c2" hidden>
-    <label><img class="pv" id="pv2" alt=""><input id="n2" maxlength="12" placeholder="Nome do Jogador 2" autocomplete="off"></label>
-    <div class="row" id="p2row" aria-label="Escolha o sabor do jogador 2"></div>
+  <div id="tab-fases" hidden>
+    <p class="sub">Conclua uma fase para liberar a próxima. As concluídas ficam rosa!</p>
+    <div id="levels"></div>
+    <button id="resetp" class="pill">Apagar progresso</button>
   </div>
-  <button id="play">Jogar!</button>
-  <p id="help"></p>
 </section>
 <section id="game" hidden>
   <h1>Sorvetada</h1>
