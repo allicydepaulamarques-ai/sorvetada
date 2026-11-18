@@ -62,3 +62,6 @@ canvas{width:min(100%,780px)}
 @supports (height:100dvh){canvas{width:min(100%,780px,calc((100dvh - 200px) * 1.154))}}
 @media (hover:hover) and (pointer:fine){#ctl{display:none!important}}
 .lv.next{outline:3px dashed #ff4f81;outline-offset:3px}
+
+body{box-sizing:border-box}
+.ver{font-size:.75rem;opacity:.6;margin-top:6px}

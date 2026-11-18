@@ -355,4 +355,5 @@ document.querySelectorAll('#pad button').forEach(b=>{
 $('bomb').addEventListener('pointerdown',e=>{e.preventDefault();drop(P[0])});
 c.addEventListener('pointerdown',()=>{if(over)after()});
 setMode(1);
+if($('ver'))$('ver').textContent='Versão 6';
 requestAnimationFrame(loop);
