@@ -397,13 +397,33 @@ addEventListener('keyup',e=>{
   if(M1[k])P[0].k[M1[k]]=0;
   else if(M2[k])P[mode==1?0:1].k[M2[k]]=0;
 });
-document.querySelectorAll('#pad button').forEach(b=>{
-  const k=b.dataset.k;
-  b.addEventListener('pointerdown',e=>{e.preventDefault();press(P[0],k,1)});
-  ['pointerup','pointerleave','pointercancel'].forEach(n=>b.addEventListener(n,()=>P[0].k[k]=0));
-});
+// Direcional analógico (estilo jogos de celular): arraste a bolinha para andar
+const joy=$('joy'),knob=$('knob');
+let jid=null;
+function joyMove(e){
+  const r=joy.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
+  let dx=e.clientX-cx,dy=e.clientY-cy;
+  const max=r.width/2-knob.offsetWidth/2,len=Math.hypot(dx,dy);
+  if(len>max){dx*=max/len;dy*=max/len}
+  knob.style.transform='translate('+dx+'px,'+dy+'px)';
+  const q=P[0];if(!q)return;
+  const prev=joy.dataset.dir;let d=null;
+  if(len>max*.28){
+    const ax=Math.abs(dx),ay=Math.abs(dy),h=prev=='l'||prev=='r',v=prev=='u'||prev=='d';
+    if(h&&ax>=ay*.75)d=dx>0?'r':'l';
+    else if(v&&ay>=ax*.75)d=dy>0?'d':'u';
+    else d=ax>ay?(dx>0?'r':'l'):(dy>0?'d':'u');
+  }
+  for(const k of 'udlr')if(k!==d)q.k[k]=0;
+  if(d&&!q.k[d])press(q,d,1);
+  joy.dataset.dir=d||'';
+}
+function joyEnd(){jid=null;knob.style.transform='';joy.dataset.dir='';if(P[0])for(const k of 'udlr')P[0].k[k]=0}
+joy.addEventListener('pointerdown',e=>{e.preventDefault();jid=e.pointerId;if(joy.setPointerCapture)joy.setPointerCapture(e.pointerId);joyMove(e)});
+joy.addEventListener('pointermove',e=>{if(e.pointerId===jid)joyMove(e)});
+['pointerup','pointercancel','lostpointercapture'].forEach(n=>joy.addEventListener(n,e=>{if(e.pointerId===jid)joyEnd()}));
 $('bomb').addEventListener('pointerdown',e=>{e.preventDefault();drop(P[0])});
 c.addEventListener('pointerdown',()=>{if(over)after()});
 setMode(1);
-if($('ver'))$('ver').textContent='Versão 8';
+if($('ver'))$('ver').textContent='Versão 9';
 requestAnimationFrame(loop);

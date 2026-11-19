@@ -5,7 +5,7 @@
 <title>Sorvetada</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap">
-<link rel="stylesheet" href="style.css?v=8">
+<link rel="stylesheet" href="style.css?v=9">
 </head>
 <body>
 <button id="theme" class="pill"></button>
@@ -38,14 +38,11 @@
   <div id="pw"></div>
   <canvas id="c" width="780" height="676"></canvas>
   <div id="ctl">
-    <div id="pad">
-      <span></span><button data-k="u" aria-label="Cima">▲</button><span></span>
-      <button data-k="l" aria-label="Esquerda">◀</button><button data-k="d" aria-label="Baixo">▼</button><button data-k="r" aria-label="Direita">▶</button>
-    </div>
-    <button id="bomb">Soltar cereja</button>
+    <div id="joy" aria-label="Direcional analógico"><span class="ch u">▲</span><span class="ch d">▼</span><span class="ch l">◀</span><span class="ch r">▶</span><div id="knob"></div></div>
+    <button id="bomb" aria-label="Soltar cereja-bomba"><span>🍒</span><small>Soltar</small></button>
   </div>
 </section>
-<p id="ver" class="ver">Versão 8 · carregando…</p>
-<script src="game.js?v=8"></script>
+<p id="ver" class="ver">Versão 9 · carregando…</p>
+<script src="game.js?v=9"></script>
 </body>
 </html>
