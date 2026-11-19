@@ -65,3 +65,15 @@ canvas{width:min(100%,780px)}
 
 body{box-sizing:border-box}
 .ver{font-size:.75rem;opacity:.6;margin-top:6px}
+
+#pw{font-size:.95rem;font-weight:600;min-height:1.4em;text-align:center;max-width:780px}
+
+/* Botão de menu no topo (longe dos controles) e proteção contra rolagem lateral no celular */
+html,body{overflow-x:hidden}
+#top{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;max-width:780px}
+#top h1{font-size:1.6rem}
+#top .pill{padding:6px 14px;font-size:.9rem}
+#menu,#game{min-width:0;box-sizing:border-box;width:100%}
+canvas{max-width:100%}
+#ctl{flex-wrap:wrap;justify-content:center;gap:16px;max-width:100%}
+@media (max-width:420px){#pad{grid-template-columns:repeat(3,58px);grid-template-rows:repeat(2,54px)}#bomb{width:104px;height:114px}}
