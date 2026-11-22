@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Sorvetada</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffd9ec">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap">
+<link rel="stylesheet" href="style.css?v=12">
+</head>
+<body>
+<div id="deco" aria-hidden="true"></div>
+<button id="theme" class="pill"></button>
+<section id="menu">
+  <div class="logo"><i class="cherry"></i><h1>Sorvetada</h1><p class="tag">Mate os monstros e faça mais pontos!</p></div>
+  <div class="row" id="tabs"><button data-t="partida" aria-pressed="true">🎮 Partida</button><button data-t="fases" aria-pressed="false">🗺️ Fases</button></div>
+  <div id="tab-partida">
+    <div class="row" id="mode"><button data-m="1" aria-pressed="true">👤 1 jogador</button><button data-m="2" aria-pressed="false">👥 2 jogadores (duelo)</button></div>
+    <div class="card" id="c1">
+      <label><img class="pv" id="pv1" alt=""><input id="n1" maxlength="12" placeholder="Nome do Jogador 1" autocomplete="off"></label>
+      <div class="row" id="p1row" aria-label="Escolha o sabor do jogador 1"></div>
+    </div>
+    <div class="card" id="c2" hidden>
+      <label><img class="pv" id="pv2" alt=""><input id="n2" maxlength="12" placeholder="Nome do Jogador 2" autocomplete="off"></label>
+      <div class="row" id="p2row" aria-label="Escolha o sabor do jogador 2"></div>
+    </div>
+    <button id="play">Escolher fase ▶</button>
+    <div id="help" class="howto"></div>
+  </div>
+  <div id="tab-fases" hidden>
+    <p class="sub2">Conclua uma fase para liberar a próxima.<br>As concluídas ficam rosa!</p>
+    <div id="levels"></div>
+    <button id="resetp" class="pill">🗑️ Apagar progresso</button>
+  </div>
+</section>
+<section id="game" hidden>
+  <div id="top"><h1>Sorvetada</h1><button id="back" class="pill">← Menu</button></div>
+  <div id="hud"><span id="h1"></span><span id="h2"></span><span id="h3"></span></div>
+  <div id="pw"></div>
+  <div id="frame"><canvas id="c" width="780" height="676"></canvas></div>
+  <div id="ctl">
+    <div id="joy" aria-label="Direcional analógico"><span class="ch u">▲</span><span class="ch d">▼</span><span class="ch l">◀</span><span class="ch r">▶</span><div id="knob"></div></div>
+    <button id="bomb" aria-label="Soltar cereja-bomba"><span>🍒</span><small>Soltar</small></button>
+  </div>
+</section>
+<p id="ver" class="ver">Versão 12 · carregando…</p>
+<script src="game.js?v=12"></script>
+</body>
+</html>
