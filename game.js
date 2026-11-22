@@ -436,5 +436,5 @@ joy.addEventListener('pointermove',e=>{if(e.pointerId===jid)joyMove(e)});
 $('bomb').addEventListener('pointerdown',e=>{e.preventDefault();drop(P[0])});
 c.addEventListener('pointerdown',()=>{if(over)after()});
 setMode(1);
-if($('ver'))$('ver').textContent='Versão 11';
+if($('ver'))$('ver').textContent='Versão 12';
 requestAnimationFrame(loop);
