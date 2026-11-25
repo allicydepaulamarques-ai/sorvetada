@@ -155,6 +155,9 @@ window.SND={
     }
     begin();
   },
+  // Compatibilidade com versões antigas do game.js (botão único de som).
+  muted(){return !S.mo&&!S.so},
+  toggle(){const m=!S.mo&&!S.so;this.set({mo:m,so:m});return !m},
   get(){return Object.assign({},S)},
   set(o){
     Object.assign(S,o);
