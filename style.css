@@ -173,3 +173,38 @@ body.splash .ver{display:none}
 #p1row button span,#p2row button span{font-size:.68rem;line-height:1.1;white-space:nowrap}
 /* Cobertura do botão "Escolher fase": sem emendas e sem pedaço cortado nas pontas */
 #play::before{background:linear-gradient(#fff3e0,#fff3e0) 0 0/100% 16px no-repeat,var(--drip) 0 0/108px 40px repeat-x;background-repeat:no-repeat,round}
+
+/* ===== Escala e espaçamento do menu (só tamanho e respiro; sem mudar cores/estilo) ===== */
+/* Celular: elementos maiores e mais espaço entre as etapas */
+@media (max-width:599px){
+  #menu{gap:20px}
+  #menu .logo{margin-top:34px;margin-bottom:26px;padding:34px 28px 26px}
+  #menu .logo h1{font-size:clamp(2.8rem,13.5vw,4.2rem)}
+  #menu .tag{font-size:1.1rem;margin-top:8px}
+  #tab-partida,#tab-fases{gap:20px}
+  #tabs{gap:12px}
+  #tabs button,#mode button{font-size:1.2rem;padding:12px 26px}
+  #mode{gap:12px}
+  .card{width:100%;padding:40px 16px 18px;gap:16px}
+  .pv{width:80px;height:80px}
+  .card input{font-size:1.15rem;padding:12px 16px}
+  #p1row,#p2row{max-width:none;gap:8px}
+  #p1row button img,#p2row button img{width:52px;height:52px}
+  #p1row button span,#p2row button span{font-size:.76rem}
+  #play{font-size:1.9rem;padding:18px 0;width:100%;max-width:420px;margin-top:22px}
+  #play::before{top:-26px;height:52px}
+  .how-btn{font-size:1.15rem;padding:11px 28px;margin-top:20px}
+  .sub2{font-size:1.1rem}
+  #levels{gap:22px 14px}
+}
+/* Tela larga: o menu inteiro cresce proporcionalmente para preencher as laterais */
+@media (min-width:600px){#menu{zoom:1.2}}
+@media (min-width:900px){#menu{zoom:1.35}}
+@media (min-width:1200px){#menu{zoom:1.5}}
+/* ajustes finos */
+@media (max-width:599px){
+  #menu .tag{font-size:1rem}
+  #mode button{font-size:1.05rem;padding:14px 22px}
+}
+/* monitor largo e baixo: cresce menos, para não obrigar a rolar demais */
+@media (min-width:900px) and (max-height:900px){#menu{zoom:1.2}}

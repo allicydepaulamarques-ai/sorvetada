@@ -579,7 +579,7 @@ $('sv').onchange=()=>snd.sfx('crystal');
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('button');if(b&&b.id!=='bomb')snd.sfx('click')});
 snd.music('menu');
 setMode(1);
-if($('ver'))$('ver').textContent='Versão 18';
+if($('ver'))$('ver').textContent='Versão 19';
 // Abertura: só o nome do jogo; depois abre a escolha de personagem
 let splT=0;
 function endSplash(){
