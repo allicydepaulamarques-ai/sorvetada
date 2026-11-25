@@ -126,3 +126,18 @@ canvas{display:block;width:100%;max-width:100%;height:auto;border-radius:12px;ba
 #snd{position:fixed;top:calc(env(safe-area-inset-top,0px) + 8px);left:8px;z-index:5}
 #top .tr{display:flex;align-items:center;gap:8px}
 #top .tr .snd{font-size:.85rem;padding:6px 12px}
+
+/* Configurações de som */
+#cfg{position:fixed;inset:0;z-index:30;display:flex;align-items:center;justify-content:center;background:rgba(40,10,60,.55);padding:16px}
+#cfg[hidden]{display:none}
+.cfgbox{width:min(100%,360px);box-sizing:border-box;background:var(--btn);color:var(--fg);border:4px solid var(--edge);border-radius:24px;padding:18px 20px 20px;box-shadow:0 8px 0 rgba(120,40,90,.35);display:flex;flex-direction:column;gap:12px}
+.cfgbox h2{margin:0;font-size:1.5rem;text-align:center}
+.cfgbox .cr{display:flex;align-items:center;gap:10px;font-weight:600;font-size:1.05rem}
+.cfgbox .cr input{width:22px;height:22px;accent-color:#ff4f81}
+.cfgbox .sl{display:flex;align-items:center;gap:10px}
+.cfgbox input[type=range]{flex:1;min-width:0;height:28px;accent-color:#ff4f81}
+.cfgbox output{min-width:3em;text-align:right;font-weight:600}
+.cfgbox .pill{align-self:center;margin-top:4px}
+/* Fases de chefão */
+#frame.boss{border-color:#2b1233;background:repeating-linear-gradient(45deg,rgba(40,15,10,.4) 0 3px,transparent 3px 11px),repeating-linear-gradient(-45deg,rgba(40,15,10,.4) 0 3px,transparent 3px 11px),#5a3524;box-shadow:0 0 26px 6px rgba(176,96,255,.75),0 10px 0 rgba(30,10,45,.55)}
+.lv .crown{top:-16px;left:-8px;font-size:1.5rem}

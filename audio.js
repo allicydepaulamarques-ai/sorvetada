@@ -1,19 +1,21 @@
 // Sorvetada: música e efeitos sonoros, tudo gerado na hora pelo Web Audio (sem arquivos de som).
 (function(){
-const LSK='sorvetada-som';
-let ac=null,master,musG,sfxG,nb,timer=null,cur=null,step=0,nextT=0,KO=0,want=null,muted=false,lastBoom=0;
-try{muted=localStorage.getItem(LSK)==='0'}catch(e){}
+const LSK='sorvetada-som2';
+let ac=null,master,musG,sfxG,nb,timer=null,cur=null,step=0,nextT=0,KO=0,want=null,lastBoom=0;
+const S={mv:.8,sv:.8,mo:true,so:true};
+try{const o=JSON.parse(localStorage.getItem(LSK));if(o)for(const k in S)if(typeof o[k]===typeof S[k])S[k]=o[k]}catch(e){}
 const mtof=m=>440*Math.pow(2,(m-69)/12);
 const MV=.2,SV=.55;
+const mg=()=>S.mo?Math.max(.0001,MV*S.mv*S.mv):.0001,sg=()=>S.so?Math.max(.0001,SV*S.sv*S.sv):.0001;
 
 function ctx(){
   if(ac)return ac;
   const A=window.AudioContext||window.webkitAudioContext;
   if(!A)return null;
   ac=new A();
-  master=ac.createGain();master.gain.value=muted?0:1;master.connect(ac.destination);
-  musG=ac.createGain();musG.gain.value=MV;musG.connect(master);
-  sfxG=ac.createGain();sfxG.gain.value=SV;sfxG.connect(master);
+  master=ac.createGain();master.gain.value=1;master.connect(ac.destination);
+  musG=ac.createGain();musG.gain.value=mg();musG.connect(master);
+  sfxG=ac.createGain();sfxG.gain.value=sg();sfxG.connect(master);
   nb=ac.createBuffer(1,ac.sampleRate,ac.sampleRate);
   const d=nb.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;
   return ac;
@@ -114,8 +116,8 @@ function begin(){
   if(!ac||ac.state!=='running')return;
   stopTimer();
   const now=ac.currentTime;
-  musG.gain.cancelScheduledValues(now);musG.gain.setValueAtTime(MV,now);
-  if(!want)return;
+  musG.gain.cancelScheduledValues(now);musG.gain.setValueAtTime(mg(),now);
+  if(!want||!S.mo)return;
   const T=TR[want.name],l=want.lvl||1;
   cur=Object.assign({},T);
   KO=T.ko[(T.b?((l-1)/5|0):(l-1))%T.ko.length];
@@ -139,7 +141,7 @@ document.addEventListener('visibilitychange',()=>{
 
 window.SND={
   sfx(n){
-    if(muted||!ac||ac.state!=='running'||!SFX[n])return;
+    if(!S.so||S.sv<=0||!ac||ac.state!=='running'||!SFX[n])return;
     try{SFX[n](ac.currentTime+.005)}catch(e){}
   },
   music(n,l){
@@ -153,12 +155,17 @@ window.SND={
     }
     begin();
   },
-  toggle(){
-    muted=!muted;
-    try{localStorage.setItem(LSK,muted?'0':'1')}catch(e){}
-    if(master)master.gain.setValueAtTime(muted?0:1,ac.currentTime);
-    return muted;
-  },
-  muted(){return muted}
+  get(){return Object.assign({},S)},
+  set(o){
+    Object.assign(S,o);
+    try{localStorage.setItem(LSK,JSON.stringify(S))}catch(e){}
+    if(!ac)return;
+    const now=ac.currentTime;
+    sfxG.gain.cancelScheduledValues(now);sfxG.gain.setValueAtTime(sg(),now);
+    if('mo' in o){
+      if(S.mo)begin();
+      else{stopTimer();musG.gain.cancelScheduledValues(now);musG.gain.setValueAtTime(.0001,now)}
+    }else if(timer){musG.gain.cancelScheduledValues(now);musG.gain.setValueAtTime(mg(),now)}
+  }
 };
 })();
