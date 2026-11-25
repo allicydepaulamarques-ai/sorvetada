@@ -15,6 +15,10 @@ let bannerT=0,cfgOpen=false;
 const LS='sorvetada-fases',LT='sorvetada-tema';
 try{const s=JSON.parse(localStorage.getItem(LS));if(Array.isArray(s))s.slice(0,20).forEach((v,i)=>done[i]=!!v)}catch(e){}
 const save=()=>{try{localStorage.setItem(LS,JSON.stringify(done))}catch(e){}};
+// recordes de pontos por fase (salvos no navegador): rec[i]={p:pontos,n:nome}
+const LR='sorvetada-recordes';let rec=[],newRec=false;
+try{const s=JSON.parse(localStorage.getItem(LR));if(Array.isArray(s))rec=s}catch(e){}
+const saveRec=()=>{try{localStorage.setItem(LR,JSON.stringify(rec))}catch(e){}};
 const mq=matchMedia('(prefers-color-scheme: dark)');
 const isDark=()=>{const t=document.documentElement.dataset.theme;return t?t=='dark':mq.matches};
 const mkP=(sx,sy,pl)=>({x:sx,y:sy,sx,sy,pl,lives:3,score:0,inv:0,fr:0,mt:0,out:false,pw:newPw(),px:sx,py:sy,last:'',buf:'',bt:0,k:{}});
@@ -54,6 +58,7 @@ function renderLevels(){
     const open=i==0||done[i-1]||done[i],b=document.createElement('button');
     b.className='lv'+(done[i]?' done':'')+(open?'':' lock')+(i==done.indexOf(false)?' next':'');b.disabled=!open;
     const nx=i==done.indexOf(false);b.innerHTML=(L.boss?'<em class="crown">👑</em>':'')+(nx?'<em class="star">⭐</em>':'')+(open?'':'<em class="lock">🔒</em>')+'<b>'+(i+1)+'</b><span>'+L.n+'</span><small>'+(done[i]?'✔ Concluída':nx?'▶ Jogar':open?'Jogar':'Bloqueada')+'</small>';
+    if(rec[i]&&rec[i].p)b.insertAdjacentHTML('beforeend','<small class="rec">🏆 '+Number(rec[i].p)+'</small>');
     b.onclick=()=>startLevel(i+1);box.appendChild(b);
   });
 }
@@ -61,8 +66,9 @@ function showMenu(){snd.music('menu');scene(false);playing=false;over=false;$('g
 function showLevels(){snd.music('menu');scene(false);playing=false;over=false;$('game').hidden=true;$('menu').hidden=false;$('theme').hidden=$('snd').hidden=false;tab('fases')}
 function leave(){if(!over&&!confirm('Voltar ao menu? A fase atual será perdida.'))return;showMenu()}
 $('play').onclick=play;$('back').onclick=leave;
+$('howBtn').onclick=()=>{const h=$('help');h.hidden=!h.hidden;$('howBtn').setAttribute('aria-expanded',String(!h.hidden));$('howBtn').textContent='✨ Como jogar '+(h.hidden?'▾':'▴')};
 document.querySelectorAll('#tabs button').forEach(b=>b.onclick=()=>tab(b.dataset.t));
-$('resetp').onclick=()=>{if(confirm('Apagar o progresso das fases?')){done.fill(false);save();renderLevels()}};
+$('resetp').onclick=()=>{if(confirm('Apagar o progresso e os recordes das fases?')){done.fill(false);save();rec=[];saveRec();renderLevels()}};
 function applyTheme(t){
   if(t)document.documentElement.dataset.theme=t;
   $('theme').textContent=isDark()?'☀️ Modo claro':'🌙 Modo escuro';
@@ -242,7 +248,13 @@ function hurt(q){
   q.lives--;q.inv=1600;q.x=q.sx;q.y=q.sy;q.px=q.x;q.py=q.y;
   if(q.lives<=0){q.out=true;if(P.every(a=>a.out))lose()}
 }
-function win(){snd.music(null);snd.sfx('win');over=true;res='won';done[level-1]=true;save()}
+function win(){
+  snd.music(null);snd.sfx('win');over=true;res='won';done[level-1]=true;save();
+  let bi=0;P.forEach((q,i)=>{if(q.score>P[bi].score)bi=i});
+  const pts=P[bi].score,old=rec[level-1];
+  newRec=pts>0&&(!old||pts>old.p);
+  if(newRec){rec[level-1]={p:pts,n:names[bi]};saveRec()}
+}
 function lose(){snd.music(null);snd.sfx('lose');over=true;res='lost'}
 function los(e){
   for(const q of P){
@@ -390,7 +402,7 @@ function draw(t){
     x.fillStyle='rgba(255,255,255,.55)';x.beginPath();x.arc(X,Y,18+Math.sin(t/150)*1.5,0,7);x.fill();
     x.fillStyle=p[3];x.beginPath();x.arc(X,Y,14,0,7);x.fill();
     x.strokeStyle='#fff';x.lineWidth=3;x.stroke();
-    x.font='16px sans-serif';x.textAlign='center';x.textBaseline='middle';x.fillStyle='#000';x.fillText(p[1],X,Y+1);
+    x.font='16px sans-serif';x.textAlign='left';x.textBaseline='middle';x.fillStyle='#000';x.fillText(p[1],X-8,Y+1);x.textAlign='center';
     x.textBaseline='alphabetic';
   });
   bombs.forEach(b=>{
@@ -430,12 +442,18 @@ function draw(t){
   toasts.forEach(o=>{
     x.globalAlpha=Math.min(1,o.t/400);x.font='600 16px Fredoka,"Trebuchet MS",sans-serif';x.textAlign='center';
     const X=o.x*T+20,Y=o.y*T-6-(1400-o.t)/35;
-    x.strokeStyle='#6b2d4a';x.lineWidth=4;x.strokeText(o.s,X,Y);x.fillStyle='#fff';x.fillText(o.s,X,Y);x.globalAlpha=1;
+    x.strokeStyle='#6b2d4a';x.lineWidth=4;
+    const ic=o.s.split(' ')[0],tx=o.s.slice(ic.length+1),tw=x.measureText(tx).width;
+    x.strokeText(tx,X+10,Y);x.fillStyle='#fff';x.fillText(tx,X+10,Y);
+    x.textAlign='left';x.fillText(ic,X+10-tw/2-22,Y);x.textAlign='center';x.globalAlpha=1;
   });
   if(bannerT>0&&!over){
     x.globalAlpha=Math.max(0,Math.min(1,bannerT/500,(2800-bannerT)/250+.15));
     rr(60,205,480,100,22);x.fillStyle='rgba(40,10,70,.93)';x.fill();x.strokeStyle='#c98bff';x.lineWidth=4;x.stroke();
-    x.fillStyle='#ffe6ff';x.textAlign='center';x.font='600 34px Fredoka,"Trebuchet MS",sans-serif';x.fillText('⚠️ Fase do Chefão! ⚠️',300,258);
+    x.fillStyle='#ffe6ff';x.textAlign='center';x.font='600 34px Fredoka,"Trebuchet MS",sans-serif';x.fillText('Fase do Chefão!',300,258);
+    // triângulos de aviso desenhados (emoji no canvas desalinha no Safari do iPhone)
+    for(const sx of [126,474]){x.fillStyle='#ffd23f';x.beginPath();x.moveTo(sx,230);x.lineTo(sx+24,272);x.lineTo(sx-24,272);x.closePath();x.fill();x.fillStyle='#5a1a7a';x.font='600 24px Fredoka,sans-serif';x.fillText('!',sx,267)}
+    x.fillStyle='#ffe6ff';
     x.font='20px Fredoka,"Trebuchet MS",sans-serif';x.fillText(LV[level-1].n,300,290);x.globalAlpha=1;
   }
   if(over){
@@ -452,9 +470,11 @@ function draw(t){
     x.font='600 40px '+F;x.fillText(won?'Fase '+level+' concluída!':'Derreteu tudo!',300,215);
     x.font='24px '+F;x.fillText(sub,300,255);
     if(sub2){x.fillStyle='#ffd23f';x.fillText(sub2,300,290);x.fillStyle='#fff'}
+    const rc=rec[level-1];
+    if(won&&rc){x.font='600 24px '+F;x.fillStyle='#ffd23f';x.fillText(newRec?'Novo recorde: '+rc.p+' pontos!':'Recorde da fase: '+rc.p+' ('+rc.n+')',300,325);x.fillStyle='#fff'}
     x.font='20px '+F;
-    x.fillText(won?'Enter ou toque: voltar às fases':'Enter ou toque: tentar de novo',300,335);
-    x.fillText('Esc para voltar ao menu',300,365);
+    x.fillText(won?'Enter ou toque: voltar às fases':'Enter ou toque: tentar de novo',300,370);
+    x.fillText('Esc para voltar ao menu',300,400);
   }
 }
 function loop(t){
@@ -463,7 +483,7 @@ function loop(t){
   requestAnimationFrame(loop);
 }
 function restart(){
-  ct=4000;
+  ct=4000;newRec=false;
   P=[mkP(1,1,sel[0])];if(mode==2)P.push(mkP(W-2,H-2,sel[1]));
   init();
   scene(true);bannerT=LV[level-1].boss?2800:0;
@@ -531,5 +551,5 @@ $('sv').onchange=()=>snd.sfx('crystal');
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('button');if(b&&b.id!=='bomb')snd.sfx('click')});
 snd.music('menu');
 setMode(1);
-if($('ver'))$('ver').textContent='Versão 14';
+if($('ver'))$('ver').textContent='Versão 15';
 requestAnimationFrame(loop);

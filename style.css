@@ -141,3 +141,18 @@ canvas{display:block;width:100%;max-width:100%;height:auto;border-radius:12px;ba
 /* Fases de chefão */
 #frame.boss{border-color:#2b1233;background:repeating-linear-gradient(45deg,rgba(40,15,10,.4) 0 3px,transparent 3px 11px),repeating-linear-gradient(-45deg,rgba(40,15,10,.4) 0 3px,transparent 3px 11px),#5a3524;box-shadow:0 0 26px 6px rgba(176,96,255,.75),0 10px 0 rgba(30,10,45,.55)}
 .lv .crown{top:-16px;left:-8px;font-size:1.5rem}
+
+/* ajustes de alinhamento no celular, botão do Como jogar e recordes */
+#menubar{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;position:relative;z-index:2}
+#menubar #snd,#menubar #theme{position:static}
+.logo{margin-top:30px}
+#top .tr .pill{font-size:.9rem;padding:7px 14px}
+.card::before,.howto::before{left:0;right:0;border-radius:22px 22px 0 0}
+#frame::before{left:0;right:0;border-radius:22px 22px 0 0}
+.lv::before{left:0;right:0}
+#play::before{left:16%;right:16%;border-radius:14px 14px 0 0}
+.how-btn{font:inherit;font-weight:600;font-size:1rem;color:#fff;background:linear-gradient(#ff7aa8,#c93c75);border:3px solid #fff;border-radius:999px;padding:8px 22px;margin-top:14px;box-shadow:0 4px 0 rgba(120,20,60,.3);text-shadow:0 2px 0 rgba(120,20,60,.35)}
+.how-btn:active{transform:translateY(2px)}
+.howto::after{content:none}
+.howto{margin-top:0}
+.lv .rec{font-size:.78rem;font-weight:600;opacity:1}
