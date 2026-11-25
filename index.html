@@ -6,11 +6,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#ffd9ec">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap">
-<link rel="stylesheet" href="style.css?v=12">
+<link rel="stylesheet" href="style.css?v=13">
 </head>
 <body>
 <div id="deco" aria-hidden="true"></div>
 <button id="theme" class="pill"></button>
+<button id="snd" class="pill snd" aria-label="Ligar ou desligar o som"></button>
 <section id="menu">
   <div class="logo"><i class="cherry"></i><h1>Sorvetada</h1><p class="tag">Mate os monstros e faça mais pontos!</p></div>
   <div class="row" id="tabs"><button data-t="partida" aria-pressed="true">🎮 Partida</button><button data-t="fases" aria-pressed="false">🗺️ Fases</button></div>
@@ -34,7 +35,7 @@
   </div>
 </section>
 <section id="game" hidden>
-  <div id="top"><h1>Sorvetada</h1><button id="back" class="pill">← Menu</button></div>
+  <div id="top"><h1>Sorvetada</h1><div class="tr"><button id="snd2" class="pill snd" aria-label="Ligar ou desligar o som"></button><button id="back" class="pill">← Menu</button></div></div>
   <div id="hud"><span id="h1"></span><span id="h2"></span><span id="h3"></span></div>
   <div id="pw"></div>
   <div id="frame"><canvas id="c" width="780" height="676"></canvas></div>
@@ -43,7 +44,8 @@
     <button id="bomb" aria-label="Soltar cereja-bomba"><span>🍒</span><small>Soltar</small></button>
   </div>
 </section>
-<p id="ver" class="ver">Versão 12 · carregando…</p>
-<script src="game.js?v=12"></script>
+<p id="ver" class="ver">Versão 13 · carregando…</p>
+<script src="audio.js?v=13"></script>
+<script src="game.js?v=13"></script>
 </body>
 </html>
