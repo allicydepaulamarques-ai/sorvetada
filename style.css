@@ -38,7 +38,7 @@ h1{margin:0;font-size:clamp(2.4rem,10vw,3.8rem);font-weight:600;line-height:1.05
 #tabs button:active,#mode button:active,#play:active,.pill:active{transform:translateY(2px)}
 .pill{font-weight:600;font-size:.95rem;color:#fff;background:linear-gradient(#ff7aa8,#ff3d7f);border:3px solid #ffd0e3;border-radius:999px;padding:8px 20px;box-shadow:inset 0 3px 0 rgba(255,255,255,.45),0 5px 0 rgba(160,30,80,.35);text-shadow:0 2px 0 rgba(140,20,70,.35)}
 #play{position:relative;font-weight:600;font-size:1.6rem;color:#fff;background:linear-gradient(#ff8fb8,#ff3d7f);border:4px solid #ffd0e3;border-radius:999px;padding:14px 54px;margin-top:10px;box-shadow:inset 0 4px 0 rgba(255,255,255,.5),0 8px 0 rgba(160,30,80,.35);text-shadow:0 3px 0 rgba(140,20,70,.4)}
-#play::before{content:"";position:absolute;left:10%;right:10%;top:-12px;height:24px;background:var(--drip) repeat-x 0 0/60px 22px}
+#play::before{content:"";position:absolute;left:10%;right:10%;top:-22px;height:44px;background:var(--drip) repeat-x 0 0/108px 40px}
 #theme{position:fixed;top:calc(env(safe-area-inset-top,0px) + 8px);right:8px;z-index:5}
 /* cartões */
 .card{position:relative;width:min(100%,480px);box-sizing:border-box;background:var(--card);border:3px solid #ffb3d1;border-radius:26px;padding:34px 14px 14px;box-shadow:0 6px 0 rgba(160,50,100,.2);display:flex;flex-direction:column;align-items:center;gap:10px}
@@ -142,17 +142,15 @@ canvas{display:block;width:100%;max-width:100%;height:auto;border-radius:12px;ba
 #frame.boss{border-color:#2b1233;background:repeating-linear-gradient(45deg,rgba(40,15,10,.4) 0 3px,transparent 3px 11px),repeating-linear-gradient(-45deg,rgba(40,15,10,.4) 0 3px,transparent 3px 11px),#5a3524;box-shadow:0 0 26px 6px rgba(176,96,255,.75),0 10px 0 rgba(30,10,45,.55)}
 .lv .crown{top:-16px;left:-8px;font-size:1.5rem}
 
-/* ajustes de alinhamento no celular, botão do Como jogar e recordes */
-#menubar{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;position:relative;z-index:2}
-#menubar #snd,#menubar #theme{position:static}
-.logo{margin-top:30px}
-#top .tr .pill{font-size:.9rem;padding:7px 14px}
-.card::before,.howto::before{left:0;right:0;border-radius:22px 22px 0 0}
-#frame::before{left:0;right:0;border-radius:22px 22px 0 0}
-.lv::before{left:0;right:0}
-#play::before{left:16%;right:16%;border-radius:14px 14px 0 0}
-.how-btn{font:inherit;font-weight:600;font-size:1rem;color:#fff;background:linear-gradient(#ff7aa8,#c93c75);border:3px solid #fff;border-radius:999px;padding:8px 22px;margin-top:14px;box-shadow:0 4px 0 rgba(120,20,60,.3);text-shadow:0 2px 0 rgba(120,20,60,.35)}
-.how-btn:active{transform:translateY(2px)}
-.howto::after{content:none}
-.howto{margin-top:0}
-.lv .rec{font-size:.78rem;font-weight:600;opacity:1}
+/* Tela de abertura (só o nome) */
+#splash{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;width:100%;min-height:70vh;cursor:pointer;animation:splashIn .6s ease-out both}
+#splash .logo{margin:0;padding:34px 30px 30px}
+#splash h1{font-size:clamp(2.8rem,13vw,5rem)}
+@keyframes splashIn{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){#splash{animation:none}}
+body.splash #theme,body.splash #snd,body.splash .ver{display:none}
+/* Escolha de personagem: nomes sob cada sabor */
+#p1row,#p2row{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;width:100%;max-width:360px}
+#p1row button,#p2row button{width:auto;height:auto;display:flex;flex-direction:column;align-items:center;gap:1px;padding:4px 2px 3px;color:#6b2d4a;font-weight:600}
+#p1row button img,#p2row button img{width:44px;height:44px}
+#p1row button span,#p2row button span{font-size:.68rem;line-height:1.1;white-space:nowrap}
