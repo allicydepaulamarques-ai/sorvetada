@@ -171,3 +171,5 @@ body.splash .ver{display:none}
 #p1row button,#p2row button{width:auto;height:auto;display:flex;flex-direction:column;align-items:center;gap:1px;padding:4px 2px 3px;color:#6b2d4a;font-weight:600}
 #p1row button img,#p2row button img{width:44px;height:44px}
 #p1row button span,#p2row button span{font-size:.68rem;line-height:1.1;white-space:nowrap}
+/* Cobertura do botão "Escolher fase": sem emendas e sem pedaço cortado nas pontas */
+#play::before{background:linear-gradient(#fff3e0,#fff3e0) 0 0/100% 16px no-repeat,var(--drip) 0 0/108px 40px repeat-x;background-repeat:no-repeat,round}
